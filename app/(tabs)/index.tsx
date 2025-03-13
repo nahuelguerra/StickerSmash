@@ -3,6 +3,8 @@ import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import IconButton from "@/components/IconButton";
+import CircleButton from "@/components/CircleButton";
 
 
 
@@ -26,6 +28,19 @@ export default function Index() {
       alert("You did not select any image.")
     }
   }
+
+  const onReset = () => {
+    setShowAppOptions(false);
+  }
+
+  const onAddSticker = () =>{
+
+  }
+
+  const onSaveImageAsync = async () =>{
+
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
