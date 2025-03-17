@@ -14,7 +14,7 @@ export default function Button({ icon, label, onPress }: Props) {
         <MaterialIcons
             name={icon}
             size={24}
-            color="#191919"
+            color="rgb(104, 252, 195)"
 
         />
         <Text style={styles.iconButtonLabel}>{label}</Text>
@@ -26,10 +26,9 @@ const styles = StyleSheet.create({
     iconButton: {
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "rgb(104, 252, 195)", 
     },
     iconButtonLabel: {
       marginTop: 12,
-      color: "#191919"
+      color: "rgb(104, 252, 195)"
     }
 });

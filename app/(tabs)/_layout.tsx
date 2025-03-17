@@ -22,7 +22,7 @@ export default function TabsLayout() {
         // Color de los iconos/texto cuando están activos
         tabBarActiveTintColor: 'rgb(104, 252, 195)',
         // Color de los iconos/texto cuando están inactivos
-        tabBarInactiveTintColor: 'white',
+        tabBarInactiveTintColor: 'rgb(26, 75, 56)',
         // Estilo para la etiqueta de texto
         tabBarLabelStyle: {
           fontSize: 12,
