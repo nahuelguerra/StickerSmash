@@ -3,16 +3,17 @@ import { FontAwesome } from '@expo/vector-icons';
 type Props = {
   label: string;
   theme?: "primary";
+  icon?:keyof typeof FontAwesome.glyphMap,
   onPress?: () => void;
 };
 
-export default function Button({ label, theme, onPress }: Props) {
+export default function Button({ label,icon = "picture-o", theme, onPress }: Props) {
   if (theme === "primary") {
     return (
       <View style={[styles.buttonContainer,{ borderWidth: 4, borderColor: "black", borderRadius: 18}]}>
         <Pressable style={[styles.button,{backgroundColor: "rgb(104, 252, 195)", borderColor: "white"}]} onPress={onPress}>
           <FontAwesome
-            name="picture-o"
+            name={icon}
             size={18}
             color="#191919"
             style={styles.buttonIcon}
@@ -26,7 +27,7 @@ export default function Button({ label, theme, onPress }: Props) {
     <View style={styles.buttonContainer}>
       <Pressable style={styles.button} onPress={onPress}>
       <FontAwesome
-            name="picture-o"
+            name={icon}
             size={18}
             color="white"
             style={styles.buttonIcon}

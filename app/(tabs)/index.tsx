@@ -21,9 +21,11 @@ export default function Index() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [pickedEmoji, setPickedEmoji] = useState<string | undefined>(undefined);
   const [permissionresponse, requestPermission] = MediaLibrary.usePermissions();
+  const [cameraPermission, requestCameraPermission] = ImagePicker.useCameraPermissions();
 
   useEffect(() => {
     if(!permissionresponse?.granted) requestPermission();
+    if(!cameraPermission?.granted) requestCameraPermission();
   }, []);
 
   const pickImageAsync = async () => {
@@ -38,6 +40,31 @@ export default function Index() {
       console.log(result);
     } else {
       alert("You did not select any image.");
+    }
+  };
+
+  const takePhotoAsync = async () => {
+    // Verificar permisos de cámara
+    if (!cameraPermission?.granted) {
+      const permissionResult = await requestCameraPermission();
+      if (!permissionResult.granted) {
+        alert("Se necesitan permisos de cámara para tomar fotos");
+        return;
+      }
+    }
+
+    // Lanzar la cámara
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
+      console.log(result);
+    } else {
+      alert("No se tomó ninguna foto.");
     }
   };
 
@@ -102,16 +129,24 @@ export default function Index() {
         <View style={styles.footerContainer}>
           <View style={styles.buttonContainer}>
             <Button
-              label="Choose a photo"
+              label="Elegir foto"
               theme="primary"
               onPress={pickImageAsync}
             />
             <Button
-              label="Use this photo"
+              label="Usar cámara"
+              icon="camera-retro"
               theme="primary"
-              onPress={() => setShowAppOptions(true)}
+              onPress={takePhotoAsync}
             />
           </View>
+          <Button
+            label="Usar esta foto"
+            icon="check-circle"
+            theme="primary"
+            onPress={() => setShowAppOptions(true)}
+            
+          />
         </View>
       )}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
@@ -142,13 +177,17 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    gap: 15,
   },
   buttonContainer: {
-    flexDirection: "row", // Cambio clave para colocar elementos en horizontal // Espacio entre los botones
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     gap: 10,
+  },
+  useThisPhotoButton: {
+    marginTop: 10,
   },
   optionsContainer:{
     flex: 0.5,
